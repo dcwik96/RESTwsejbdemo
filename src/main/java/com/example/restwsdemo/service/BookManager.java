@@ -5,9 +5,6 @@ import com.example.restwsdemo.domain.Book;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 @Stateless
 public class BookManager {

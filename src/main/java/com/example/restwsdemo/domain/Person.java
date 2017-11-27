@@ -21,6 +21,10 @@ public class Person {
 		this.firstName = firstName;
 		this.lastName = lastName;
 	}
+
+	public Person() {
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Long getId() {
