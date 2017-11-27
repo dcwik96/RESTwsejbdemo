@@ -1,10 +1,16 @@
 package com.example.restwsdemo.domain;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
+@Entity
 public class Book {
 
+	private Long id;
 	private String title;
 	private String author;
 	private double price;
@@ -20,6 +26,16 @@ public class Book {
 		this.author = author;
 		this.price = price;
 		this.amount = amount;
+	}
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getTitle() {

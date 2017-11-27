@@ -21,22 +21,23 @@ import com.example.restwsdemo.service.BookManager;
 @Stateless
 public class BookRESTService {
 
+
 	@Inject
 	private BookManager pm;
 
 	@GET
 	@Path("/{bookId}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Book getBook(@PathParam("bookId") Integer id) {
+	public Book getBook(@PathParam("bookId") Long id) {
 		Book b = pm.getBook(id);
 		return b;
 	}
 
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	public List<Book> getBooks() {
-		return pm.getAllBooks();
-	}
+//	@GET
+//	@Produces(MediaType.APPLICATION_JSON)
+//	public List<Book> getBooks() {
+//		return pm.getAllBooks();
+//	}
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -54,7 +55,14 @@ public class BookRESTService {
 	}
 
 	@DELETE
-	public Response clearPersons() {
+	@Path("/usun/{id}")
+	public void deleteBook(@PathParam("id") Long id) {
+		pm.deleteBook(pm.getBook(id));
+
+	}
+
+	@DELETE
+	public Response clearBooks() {
 		return Response.status(200).build();
 	}
 
