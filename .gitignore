@@ -1,3 +1,6 @@
+<<<<<<< HEAD
+/target/
+=======
 # IntelliJ
 /out/
 # IntelliJ project files
@@ -69,3 +72,4 @@ fabric.properties
 *.ear
 *.sar
 *.class
+>>>>>>> e5d5107aa4354ee5e0b1940073fc9a81cbc184c4
