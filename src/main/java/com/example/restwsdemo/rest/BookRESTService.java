@@ -1,5 +1,6 @@
 package com.example.restwsdemo.rest;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -14,6 +15,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import com.example.restwsdemo.domain.Person;
 import com.example.restwsdemo.domain.Book;
 import com.example.restwsdemo.service.BookManager;
 
@@ -27,30 +29,26 @@ public class BookRESTService {
 	@GET
 	@Path("/{bookId}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Book getBook(@PathParam("bookId") Integer id) {
+	public Book getBook(@PathParam("bookId") Long id) {
 		Book b = pm.getBook(id);
 		return b;
-	}
-
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	public List<Book> getBooks() {
-		return pm.getAllBooks();
 	}
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response addBook(Book book) {
+		Person author1 = new Person("Jan", "Zieliński");		
+		Person author2 = new Person("Paweł", "Kwiatkowski");	
+		
+		List<Person> authors = new ArrayList<>();
+		authors.add(author1);
+		authors.add(author2);
+		
+		book.setAuthors(authors);
 		pm.addBook(book);
-
-		return Response.status(201).entity("Book").build();
-	}
-
-	@GET
-	@Path("/test")
-	@Produces(MediaType.TEXT_PLAIN)
-	public String test() {
-		return "REST API /book is running today!";
+		
+		//book.setTitle("Pan Wołodyjowski");
+		return Response.	status(Response.Status.CREATED).build();
 	}
 
 	@DELETE

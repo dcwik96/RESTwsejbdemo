@@ -1,32 +1,34 @@
 package com.example.restwsdemo.service;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.Collection;
 
-import javax.ejb.Singleton;
+import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 import com.example.restwsdemo.domain.Book;
+import com.example.restwsdemo.domain.Person;
 
-@Singleton
+@Stateless
 public class BookManager {
-	
-	private List<Book> db = Collections.synchronizedList(new ArrayList<>());
+
+	@PersistenceContext
+	EntityManager em;
 
 	public void addBook(Book book) {
-		db.add(book);
+		em.persist(book);
 	}
 
-	public void deleteBook(Book book){
-		
+	public Book getBook(Long id) {
+		Book retrieved = em.find(Book.class, id);
+		return retrieved;
 	}
-	
-	public Book getBook(Integer id) {
-		return new Book("Bolek","Jakis", 19.90, 10);
-	}
-	
-	public List<Book> getAllBooks(){
-		return db;
+
+	public Collection<Person> getAuthorsOfBook(Long id) {
+		Book retrieved = em.find(Book.class, id);
+		Collection<Person> result = new ArrayList<>(retrieved.getAuthors());
+		return result;
 	}
 
 }
