@@ -1,34 +1,35 @@
 package com.example.restwsdemo.service;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import com.example.restwsdemo.domain.Book;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import com.example.restwsdemo.domain.Book;
-import com.example.restwsdemo.domain.Person;
-
 @Stateless
 public class BookManager {
 
-	@PersistenceContext
-	EntityManager em;
+    @PersistenceContext
+    EntityManager em;
 
-	public void addBook(Book book) {
-		em.persist(book);
-	}
+    public void addBook(Book book) {
+        em.persist(book);
+    }
 
-	public Book getBook(Long id) {
-		Book retrieved = em.find(Book.class, id);
-		return retrieved;
-	}
+    public void deleteBook(Book book) {
+        em.remove(book);
+    }
 
-	public Collection<Person> getAuthorsOfBook(Long id) {
-		Book retrieved = em.find(Book.class, id);
-		Collection<Person> result = new ArrayList<>(retrieved.getAuthors());
-		return result;
-	}
+    public Book getBook(Long id) {
+        return em.find(Book.class, id);
+    }
+
+    public Book updateBook(Book book) {
+        return em.merge(book);
+    }
+
+//    public List<Book> getAllBooks() {
+//        return em.;
+//    }
 
 }
