@@ -3,7 +3,7 @@ package com.example.restwsdemo.domain;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 
 @XmlRootElement
 @Entity
@@ -11,7 +11,7 @@ public class Book {
 
     private Long id;
     private String title;
-    private Collection<Person> authors = new ArrayList<>();
+    private List<Person> authors = new ArrayList<>();
     private double price;
     private Company company;
     private PlaceOnShelf pos;
@@ -20,12 +20,9 @@ public class Book {
     public Book() {
     }
 
-    public Book(String title, Collection<Person> authors, double price, Company company, PlaceOnShelf pos) {
+    public Book(String title, double price) {
         this.title = title;
-        this.authors = authors;
         this.price = price;
-        this.company = company;
-        this.pos = pos;
     }
 
     @Id
@@ -54,16 +51,26 @@ public class Book {
         this.price = price;
     }
 
-    @ManyToMany
-    public Collection<Person> getAuthors() {
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    public List<Person> getAuthors() {
         return authors;
     }
 
-    public void setAuthors(Collection<Person> authors) {
+    public void setAuthors(List<Person> authors) {
         this.authors = authors;
     }
 
-    @ManyToOne
+    public void addAuthors(List<Person> persons) {
+
+        this.setAuthors(persons);
+
+        for (Person person : persons) {
+            person.getBooks().add(this);
+        }
+    }
+
+
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     public Company getCompany() {
         return company;
     }
@@ -72,7 +79,7 @@ public class Book {
         this.company = company;
     }
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     public PlaceOnShelf getPos() {
         return pos;
     }
