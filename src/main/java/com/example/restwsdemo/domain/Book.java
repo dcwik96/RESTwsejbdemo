@@ -7,6 +7,13 @@ import java.util.List;
 
 @XmlRootElement
 @Entity
+@NamedQueries({
+        @NamedQuery(name = "book.all", query = "Select b from Book b"),
+        @NamedQuery(name = "book.delete.all", query = "Delete from Book "),
+        @NamedQuery(name = "bookAuthor.findByAthorFirstName",
+                query = "Select a.firstName, a.lastName, b.title from Book b JOIN b.authors a where a.firstName = :firstName")
+
+})
 public class Book {
 
     private Long id;

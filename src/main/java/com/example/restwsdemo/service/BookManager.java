@@ -5,6 +5,7 @@ import com.example.restwsdemo.domain.Book;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.List;
 
 @Stateless
 public class BookManager {
@@ -28,8 +29,19 @@ public class BookManager {
         return em.merge(book);
     }
 
-//    public List<Book> getAllBooks() {
-//        return em.;
-//    }
+    @SuppressWarnings("unchecked")
+    public List<Book> getAllBooks() {
+        return em.createNamedQuery("book.all").getResultList();
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<Object[]> getBookOfAuthrByAuthorName(String firstName) {
+        return em.createNamedQuery("bookAuthor.findByAthorFirstName").setParameter("firstName", firstName).getResultList();
+    }
+
+    @SuppressWarnings("unchecked")
+    public void deletAll() {
+        em.createNamedQuery("book.delete.all").executeUpdate();
+    }
 
 }
