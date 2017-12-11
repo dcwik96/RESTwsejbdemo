@@ -7,6 +7,9 @@ import com.example.restwsdemo.service.PersonManager;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.json.Json;
+import javax.json.JsonArrayBuilder;
+import javax.json.JsonObject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -72,7 +75,31 @@ public class BookRESTService {
 
     @DELETE
     public Response clearBooks() {
+        bookManager.deletAll();
         return Response.status(200).build();
+    }
+
+    @GET
+    @Path("/booksauthor/{FirstName}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getBooksAuthor(@PathParam("FirstName") String firstName) {
+
+        List<Object[]> rawAuthors = bookManager.getBookOfAuthrByAuthorName(firstName);
+        JsonArrayBuilder authors = Json.createArrayBuilder();
+
+        for (Object[] rawAuthor : rawAuthors) {
+            String fName = (String) rawAuthor[0];
+            String lName = (String) rawAuthor[1];
+            String title = (String) rawAuthor[2];
+
+            authors.add(Json.createObjectBuilder()
+                    .add("firstName", fName)
+                    .add("lastName", lName)
+                    .add("title", title));
+
+        }
+        JsonObject json = Json.createObjectBuilder().add("result", authors).build();
+        return Response.ok(json, MediaType.APPLICATION_JSON).build();
     }
 
 

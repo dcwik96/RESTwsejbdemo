@@ -36,7 +36,7 @@ public class BookManager {
 
     @SuppressWarnings("unchecked")
     public List<Object[]> getBookOfAuthrByAuthorName(String firstName) {
-        return em.createNamedQuery("bookAuthor.findByAthorFirstName").setParameter("firstName", firstName).getResultList();
+        return em.createNamedQuery("bookAuthor.findByAuthorFirstName").setParameter("firstName", firstName).getResultList();
     }
 
     @SuppressWarnings("unchecked")
