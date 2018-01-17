@@ -38,5 +38,10 @@ public class PersonREST {
         pm.deletePerson(pm.getPerson(id));
     }
 
+    @DELETE
+    public Response clearPersons(){
+        pm.clearPersons();
+        return Response.status(200).build();
+    }
 
 }

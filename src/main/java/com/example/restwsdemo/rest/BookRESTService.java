@@ -75,7 +75,7 @@ public class BookRESTService {
 
     @DELETE
     public Response clearBooks() {
-        bookManager.deletAll();
+        bookManager.deleteAll();
         return Response.status(200).build();
     }
 
@@ -84,7 +84,7 @@ public class BookRESTService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getBooksAuthor(@PathParam("FirstName") String firstName) {
 
-        List<Object[]> rawAuthors = bookManager.getBookOfAuthrByAuthorName(firstName);
+        List<Object[]> rawAuthors = bookManager.getBookOfAuthorByAuthorName(firstName);
         JsonArrayBuilder authors = Json.createArrayBuilder();
 
         for (Object[] rawAuthor : rawAuthors) {
@@ -100,6 +100,17 @@ public class BookRESTService {
         }
         JsonObject json = Json.createObjectBuilder().add("result", authors).build();
         return Response.ok(json, MediaType.APPLICATION_JSON).build();
+    }
+
+    @GET
+    @Path("/cena/{cena}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Book> getBooksByPrice(@PathParam("cena") Double cena) {
+        Book book = new Book("To", 20.0);
+        bookManager.addBook(book);
+        List<Book> books = bookManager.getBooksByPrice(cena);
+
+        return books;
     }
 
 

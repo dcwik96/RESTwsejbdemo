@@ -7,6 +7,9 @@ import java.util.List;
 
 @XmlRootElement
 @Entity
+@NamedQueries({
+        @NamedQuery(name="person.deleteAll", query = "DELETE from Person")
+})
 public class Person {
 
     private Long id;
@@ -50,7 +53,7 @@ public class Person {
         this.lastName = lastName;
     }
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     public List<Book> getBooks() {
         return books;
     }

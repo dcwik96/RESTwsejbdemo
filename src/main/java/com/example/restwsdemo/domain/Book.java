@@ -10,9 +10,7 @@ import java.util.List;
 @NamedQueries({
         @NamedQuery(name = "book.all", query = "Select b from Book b"),
         @NamedQuery(name = "book.delete.all", query = "Delete from Book "),
-        @NamedQuery(name = "bookAuthor.findByAuthorFirstName",
-                query = "Select a.firstName, a.lastName, b.title from Book b JOIN b.authors a where a.firstName = :firstName")
-
+        @NamedQuery(name = "bookAuthor.findByAuthorFirstName", query = "Select a.firstName, a.lastName, b.title from Book b JOIN b.authors a where a.firstName = :firstName")
 })
 public class Book {
 
@@ -77,7 +75,7 @@ public class Book {
     }
 
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     public Company getCompany() {
         return company;
     }

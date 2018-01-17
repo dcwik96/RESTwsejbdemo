@@ -1,10 +1,16 @@
 package com.example.restwsdemo.service;
 
 import com.example.restwsdemo.domain.Book;
+import com.example.restwsdemo.domain.Book_;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import java.util.List;
 
 @Stateless
@@ -35,13 +41,29 @@ public class BookManager {
     }
 
     @SuppressWarnings("unchecked")
-    public List<Object[]> getBookOfAuthrByAuthorName(String firstName) {
+    public List<Object[]> getBookOfAuthorByAuthorName(String firstName) {
         return em.createNamedQuery("bookAuthor.findByAuthorFirstName").setParameter("firstName", firstName).getResultList();
     }
 
     @SuppressWarnings("unchecked")
-    public void deletAll() {
+    public void deleteAll() {
         em.createNamedQuery("book.delete.all").executeUpdate();
+    }
+
+    public List<Book> getBooksByPrice(Double price) {
+        CriteriaBuilder qb = em.getCriteriaBuilder();
+        CriteriaQuery<Book> c = qb.createQuery(Book.class);
+
+        Root<Book> b = c.from(Book.class);
+
+        Predicate condition = qb.gt(b.get(Book_.price), price);
+        c.where(condition);
+
+        TypedQuery<Book> q = em.createQuery(c);
+
+        List<Book> result = q.getResultList();
+
+        return result;
     }
 
 }

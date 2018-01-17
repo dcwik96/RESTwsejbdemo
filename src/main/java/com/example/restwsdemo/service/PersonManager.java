@@ -27,4 +27,8 @@ public class PersonManager {
     public Person updatePerson(Person person) {
         return em.merge(person);
     }
+
+    public void clearPersons() {
+        em.createNamedQuery("person.deleteAll").executeUpdate();
+    }
 }
