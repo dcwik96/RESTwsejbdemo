@@ -10,13 +10,13 @@ import java.util.List;
 @NamedQueries({
         @NamedQuery(name = "book.all", query = "Select b from Book b"),
         @NamedQuery(name = "book.delete.all", query = "Delete from Book "),
-        @NamedQuery(name = "bookAuthor.findByAuthorFirstName", query = "Select a.firstName, a.lastName, b.title from Book b JOIN b.authors a where a.firstName = :firstName")
+        @NamedQuery(name = "bookAuthor.findByAuthorFirstName", query = "Select a.firstName, a.lastName, b.title from Book b JOIN b.author a where a.firstName = :firstName")
 })
 public class Book {
 
     private Long id;
     private String title;
-    private List<Person> authors = new ArrayList<>();
+    private List<Person> author = new ArrayList<>();
     private double price;
     private Company company;
     private PlaceOnShelf pos;
@@ -28,6 +28,14 @@ public class Book {
     public Book(String title, double price) {
         this.title = title;
         this.price = price;
+    }
+
+    public Book(String title, List<Person> author, double price, Company company, PlaceOnShelf pos) {
+        this.title = title;
+        this.author = author;
+        this.price = price;
+        this.company = company;
+        this.pos = pos;
     }
 
     @Id
@@ -57,17 +65,17 @@ public class Book {
     }
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    public List<Person> getAuthors() {
-        return authors;
+    public List<Person> getAuthor() {
+        return author;
     }
 
-    public void setAuthors(List<Person> authors) {
-        this.authors = authors;
+    public void setAuthor(List<Person> authors) {
+        this.author = authors;
     }
 
     public void addAuthors(List<Person> persons) {
 
-        this.setAuthors(persons);
+        this.setAuthor(persons);
 
         for (Person person : persons) {
             person.getBooks().add(this);
