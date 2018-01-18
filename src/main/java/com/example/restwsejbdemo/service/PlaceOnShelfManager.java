@@ -1,7 +1,6 @@
-package com.example.restwsdemo.service;
+package com.example.restwsejbdemo.service;
 
-import com.example.restwsdemo.domain.Company;
-import com.example.restwsdemo.domain.PlaceOnShelf;
+import com.example.restwsejbdemo.domain.PlaceOnShelf;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;

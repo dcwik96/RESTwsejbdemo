@@ -1,7 +1,7 @@
-package com.example.restwsdemo.service;
+package com.example.restwsejbdemo.service;
 
-import com.example.restwsdemo.domain.Book;
-import com.example.restwsdemo.domain.Book_;
+import com.example.restwsejbdemo.domain.Book;
+import com.example.restwsejbdemo.domain.Book_;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;

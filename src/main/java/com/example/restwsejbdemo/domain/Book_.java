@@ -1,4 +1,4 @@
-package com.example.restwsdemo.domain;
+package com.example.restwsejbdemo.domain;
 
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;

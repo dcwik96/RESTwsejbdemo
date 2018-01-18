@@ -1,7 +1,7 @@
 package com.example.restwsejbdemo;
 
-import com.example.restwsdemo.domain.Book;
-import com.example.restwsdemo.domain.Person;
+import com.example.restwsejbdemo.domain.Book;
+import com.example.restwsejbdemo.domain.Person;
 import com.jayway.restassured.RestAssured;
 import org.junit.BeforeClass;
 import org.junit.Test;

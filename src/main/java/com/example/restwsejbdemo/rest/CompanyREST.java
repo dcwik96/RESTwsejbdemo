@@ -1,8 +1,8 @@
-package com.example.restwsdemo.rest;
+package com.example.restwsejbdemo.rest;
 
 
-import com.example.restwsdemo.domain.Company;
-import com.example.restwsdemo.service.CompanyManager;
+import com.example.restwsejbdemo.domain.Company;
+import com.example.restwsejbdemo.service.CompanyManager;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;

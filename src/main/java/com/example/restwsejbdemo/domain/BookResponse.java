@@ -1,4 +1,4 @@
-package com.example.restwsdemo.domain;
+package com.example.restwsejbdemo.domain;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;

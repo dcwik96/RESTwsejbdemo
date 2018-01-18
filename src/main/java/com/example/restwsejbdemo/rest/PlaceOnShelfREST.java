@@ -1,7 +1,7 @@
-package com.example.restwsdemo.rest;
+package com.example.restwsejbdemo.rest;
 
-import com.example.restwsdemo.domain.PlaceOnShelf;
-import com.example.restwsdemo.service.PlaceOnShelfManager;
+import com.example.restwsejbdemo.domain.PlaceOnShelf;
+import com.example.restwsejbdemo.service.PlaceOnShelfManager;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
