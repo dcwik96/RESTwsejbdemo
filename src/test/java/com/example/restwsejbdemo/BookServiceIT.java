@@ -7,7 +7,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import javax.ws.rs.core.MediaType;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,8 +49,6 @@ public class BookServiceIT {
         authors.add(person2);
 
         Book book = new Book();
-
-
 
 
     }
