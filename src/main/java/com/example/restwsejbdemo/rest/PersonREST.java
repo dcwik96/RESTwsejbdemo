@@ -39,7 +39,7 @@ public class PersonREST {
     }
 
     @DELETE
-    public Response clearPersons(){
+    public Response clearPersons() {
         pm.clearPersons();
         return Response.status(200).build();
     }

@@ -8,7 +8,7 @@ import java.util.List;
 @XmlRootElement
 @Entity
 @NamedQueries({
-        @NamedQuery(name="person.deleteAll", query = "DELETE from Person")
+        @NamedQuery(name = "person.deleteAll", query = "DELETE from Person")
 })
 public class Person {
 
@@ -53,7 +53,7 @@ public class Person {
         this.lastName = lastName;
     }
 
-    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     public List<Book> getBooks() {
         return books;
     }

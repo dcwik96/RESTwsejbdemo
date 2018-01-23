@@ -73,7 +73,7 @@ public class BookRESTService {
         Book addedBook = bookManager.getBook(1l);
         try {
             System.out.println(addedBook.getCompany().getName());
-        }catch (org.hibernate.LazyInitializationException e){
+        } catch (org.hibernate.LazyInitializationException e) {
             e.printStackTrace();
             return true;
         }
