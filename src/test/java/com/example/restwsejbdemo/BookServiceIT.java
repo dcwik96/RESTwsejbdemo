@@ -1,7 +1,9 @@
 package com.example.restwsejbdemo;
 
 import com.example.restwsejbdemo.domain.Book;
+import com.example.restwsejbdemo.domain.Company;
 import com.example.restwsejbdemo.domain.Person;
+import com.example.restwsejbdemo.domain.PlaceOnShelf;
 import com.jayway.restassured.RestAssured;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -22,6 +24,11 @@ public class BookServiceIT {
 
     private static final String SECOND_PERSON_FIRST_NAME = "Imie";
     private static final String SECOND_PERSON_LAST_NAME = "Nazwisko";
+
+    private static final String COMPANY_NAME = "Wydawnictwo";
+
+    private static final int POS_ROW = 10;
+    private static final int POS_COLUMN = 20;
 
     @BeforeClass
     public static void setUp() {
@@ -48,7 +55,18 @@ public class BookServiceIT {
         authors.add(person1);
         authors.add(person2);
 
-        Book book = new Book();
+        Company company = new Company(COMPANY_NAME);
+        PlaceOnShelf pos = new PlaceOnShelf(POS_ROW, POS_COLUMN);
+        Book book = new Book(BOOK_TITLE, authors, BOOK_PRICE, company, pos);
+
+        given().
+                contentType(MediaType.APPLICATION_JSON).
+                body(book).
+                when().post("/book").then().assertThat().statusCode(201);
+    }
+
+    @Test
+    public void checkLazyInitializationException() {
 
 
     }

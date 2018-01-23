@@ -3,13 +3,14 @@ package com.example.restwsejbdemo.rest;
 import com.example.restwsejbdemo.domain.Book;
 import com.example.restwsejbdemo.domain.Person;
 import com.example.restwsejbdemo.service.BookManager;
+import com.example.restwsejbdemo.service.CompanyManager;
 import com.example.restwsejbdemo.service.PersonManager;
 
-import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
+import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -17,7 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Path("book")
-@Stateless
 public class BookRESTService {
 
 
@@ -25,9 +25,12 @@ public class BookRESTService {
     private BookManager bookManager;
     @Inject
     private PersonManager personManager;
+    @Inject
+    private CompanyManager companyManager;
 
     @GET
     @Produces(MediaType.TEXT_PLAIN)
+    @Transactional
     public String testRelation() {
         Person person1 = new Person("Person", "Person");
         Person person2 = new Person("Person2", "Person2");
@@ -49,9 +52,19 @@ public class BookRESTService {
         return "ManytoMany";
     }
 
+    @GET
+    @Path("/lazy")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String lazyInitialization() {
+
+        return "asdf";
+
+    }
+
 
     @GET
     @Path("/{bookId}")
+    @Transactional
     @Produces(MediaType.APPLICATION_JSON)
     public Book getBook(@PathParam("bookId") Long id) {
         Book b = bookManager.getBook(id);
@@ -60,6 +73,7 @@ public class BookRESTService {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
+    @Transactional
     public Response addBook(Book book) {
         bookManager.addBook(book);
 
@@ -68,12 +82,14 @@ public class BookRESTService {
 
     @DELETE
     @Path("/usun/{id}")
+    @Transactional
     public void deleteBook(@PathParam("id") Long id) {
         bookManager.deleteBook(bookManager.getBook(id));
 
     }
 
     @DELETE
+    @Transactional
     public Response clearBooks() {
         bookManager.deleteAll();
         return Response.status(200).build();
@@ -82,6 +98,7 @@ public class BookRESTService {
     @GET
     @Path("/booksauthor/{FirstName}")
     @Produces(MediaType.APPLICATION_JSON)
+    @Transactional
     public Response getBooksAuthor(@PathParam("FirstName") String firstName) {
 
         List<Object[]> rawAuthors = bookManager.getBookOfAuthorByAuthorName(firstName);
@@ -105,6 +122,7 @@ public class BookRESTService {
     @GET
     @Path("/cena/{cena}")
     @Produces(MediaType.APPLICATION_JSON)
+    @Transactional
     public List<Book> getBooksByPrice(@PathParam("cena") Double cena) {
         Book book = new Book("To", 20.0);
         bookManager.addBook(book);

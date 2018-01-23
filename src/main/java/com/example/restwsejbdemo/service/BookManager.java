@@ -2,6 +2,7 @@ package com.example.restwsejbdemo.service;
 
 import com.example.restwsejbdemo.domain.Book;
 import com.example.restwsejbdemo.domain.Book_;
+import com.example.restwsejbdemo.domain.Company;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -64,6 +65,10 @@ public class BookManager {
         List<Book> result = q.getResultList();
 
         return result;
+    }
+
+    public Company getCompany(Long id) {
+        return em.find(Company.class, id);
     }
 
 }

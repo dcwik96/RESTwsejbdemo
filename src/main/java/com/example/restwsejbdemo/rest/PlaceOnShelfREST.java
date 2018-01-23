@@ -3,8 +3,11 @@ package com.example.restwsejbdemo.rest;
 import com.example.restwsejbdemo.domain.PlaceOnShelf;
 import com.example.restwsejbdemo.service.PlaceOnShelfManager;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -13,28 +16,29 @@ import javax.ws.rs.core.Response;
 @Stateless
 public class PlaceOnShelfREST {
 
-    @Inject
-    private PlaceOnShelfManager placeOnShelfManager;
+    @PersistenceContext
+    EntityManager entityManager;
 
     @GET
     @Path("/{companyId}")
     @Produces(MediaType.APPLICATION_JSON)
     public PlaceOnShelf getPlaceOnShelf(@PathParam("companyId") Long id) {
-        PlaceOnShelf c = placeOnShelfManager.getPlaceOnShelf(id);
-        return c;
+        return entityManager.find(PlaceOnShelf.class, id);
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response addPlaceOnShelf(PlaceOnShelf company) {
-        placeOnShelfManager.addPlaceOnShelf(company);
+    public Response addPlaceOnShelf(PlaceOnShelf placeOnShelf) {
+        entityManager.persist(placeOnShelf);
         return Response.status(201).entity("PlaceOnShelf").build();
     }
 
     @DELETE
     @Path("/usun/{id}")
     public void deleteBook(@PathParam("id") Long id) {
-        placeOnShelfManager.deletePlaceOnShelf(placeOnShelfManager.getPlaceOnShelf(id));
+        PlaceOnShelf pos = entityManager.find(PlaceOnShelf.class, id);
+        entityManager.remove(pos);
+
     }
 
 
