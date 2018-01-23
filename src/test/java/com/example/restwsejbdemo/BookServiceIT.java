@@ -67,7 +67,6 @@ public class BookServiceIT {
 
     @Test
     public void checkLazyInitializationException() {
-
-
+        given().when().get("/book/lazy").then().assertThat().statusCode(200);
     }
 }

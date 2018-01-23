@@ -1,8 +1,10 @@
 package com.example.restwsejbdemo.domain;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
-import java.util.List;
 
 @Entity
 public class Company {
@@ -10,20 +12,14 @@ public class Company {
     private Long id;
     @NotNull
     private String name;
-    private List<Book> book;
 
     public Company() {
-
     }
 
     public Company(String name) {
         this.name = name;
     }
 
-    public Company(@NotNull String name, List<Book> book) {
-        this.name = name;
-        this.book = book;
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,14 +37,5 @@ public class Company {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    public List<Book> getBook() {
-        return book;
-    }
-
-    public void setBook(List<Book> book) {
-        this.book = book;
     }
 }

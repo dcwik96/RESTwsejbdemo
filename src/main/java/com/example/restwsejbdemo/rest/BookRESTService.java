@@ -1,7 +1,9 @@
 package com.example.restwsejbdemo.rest;
 
 import com.example.restwsejbdemo.domain.Book;
+import com.example.restwsejbdemo.domain.Company;
 import com.example.restwsejbdemo.domain.Person;
+import com.example.restwsejbdemo.domain.PlaceOnShelf;
 import com.example.restwsejbdemo.service.BookManager;
 import com.example.restwsejbdemo.service.CompanyManager;
 import com.example.restwsejbdemo.service.PersonManager;
@@ -55,10 +57,27 @@ public class BookRESTService {
     @GET
     @Path("/lazy")
     @Produces(MediaType.TEXT_PLAIN)
-    public String lazyInitialization() {
+    public Boolean lazyInitialization() {
+        Person person1 = new Person("FIRST_PERSON_FIRST_NAME", "FIRST_PERSON_LAST_NAME");
+        Person person2 = new Person("SECOND_PERSON_FIRST_NAME", "SECOND_PERSON_LAST_NAME");
+        List<Person> authors = new ArrayList<>();
+        authors.add(person1);
+        authors.add(person2);
 
-        return "asdf";
+        Company company = new Company("COMPANY_NAME");
+        PlaceOnShelf pos = new PlaceOnShelf(10, 20);
+        Book book = new Book("BOOK_TITLE", authors, 99.99, company, pos);
 
+        bookManager.addBook(book);
+
+        Book addedBook = bookManager.getBook(1l);
+        try {
+            System.out.println(addedBook.getCompany().getName());
+        }catch (org.hibernate.LazyInitializationException e){
+            e.printStackTrace();
+            return true;
+        }
+        return false;
     }
 
 
