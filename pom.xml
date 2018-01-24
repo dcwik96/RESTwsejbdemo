@@ -13,11 +13,6 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-core</artifactId>
-			<version>${org.hibernate.version}</version>
-		</dependency>
-		<dependency>
 			<groupId>com.jayway.restassured</groupId>
 			<artifactId>rest-assured</artifactId>
 			<version>2.9.0</version>
@@ -45,6 +40,8 @@
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
 			<version>5.2.12.Final</version>
+			<!--WE USE SCOPE - PROVIDED BECAUSE HIBERNATE IS INCLUDED IN WILDFLY ALREADY-->
+			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 	<build>
