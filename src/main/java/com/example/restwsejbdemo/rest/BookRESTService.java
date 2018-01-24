@@ -5,8 +5,6 @@ import com.example.restwsejbdemo.domain.Company;
 import com.example.restwsejbdemo.domain.Person;
 import com.example.restwsejbdemo.domain.PlaceOnShelf;
 import com.example.restwsejbdemo.service.BookManager;
-import com.example.restwsejbdemo.service.CompanyManager;
-import com.example.restwsejbdemo.service.PersonManager;
 
 import javax.inject.Inject;
 import javax.json.Json;
@@ -25,10 +23,6 @@ public class BookRESTService {
 
     @Inject
     private BookManager bookManager;
-    @Inject
-    private PersonManager personManager;
-    @Inject
-    private CompanyManager companyManager;
 
     @GET
     @Produces(MediaType.TEXT_PLAIN)
@@ -143,8 +137,6 @@ public class BookRESTService {
     @Produces(MediaType.APPLICATION_JSON)
     @Transactional
     public List<Book> getBooksByPrice(@PathParam("cena") Double cena) {
-        Book book = new Book("To", 20.0);
-        bookManager.addBook(book);
         List<Book> books = bookManager.getBooksByPrice(cena);
 
         return books;

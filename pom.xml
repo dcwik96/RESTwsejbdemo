@@ -43,7 +43,7 @@
 			<!--WE USE SCOPE - PROVIDED BECAUSE HIBERNATE IS INCLUDED IN WILDFLY ALREADY-->
 			<scope>provided</scope>
 		</dependency>
-	</dependencies>
+    </dependencies>
 	<build>
 		<finalName>restwsejbdemo</finalName>
 		<plugins>

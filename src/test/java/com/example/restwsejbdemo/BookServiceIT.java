@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.jayway.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.greaterThan;
 
 public class BookServiceIT {
 
@@ -22,8 +23,8 @@ public class BookServiceIT {
     private static final String FIRST_PERSON_FIRST_NAME = "Imie";
     private static final String FIRST_PERSON_LAST_NAME = "Nazwisko";
 
-    private static final String SECOND_PERSON_FIRST_NAME = "Imie";
-    private static final String SECOND_PERSON_LAST_NAME = "Nazwisko";
+    private static final String SECOND_PERSON_FIRST_NAME = "ImieDwa";
+    private static final String SECOND_PERSON_LAST_NAME = "NazwiskoDwa";
 
     private static final String COMPANY_NAME = "Wydawnictwo";
 
@@ -56,7 +57,9 @@ public class BookServiceIT {
         authors.add(person2);
 
         Company company = new Company(COMPANY_NAME);
+
         PlaceOnShelf pos = new PlaceOnShelf(POS_ROW, POS_COLUMN);
+
         Book book = new Book(BOOK_TITLE, authors, BOOK_PRICE, company, pos);
 
         given().
@@ -68,5 +71,17 @@ public class BookServiceIT {
     @Test
     public void checkLazyInitializationException() {
         given().when().get("/book/lazy").then().assertThat().statusCode(200);
+    }
+
+//    DODAWANIE KSIAZI PRZED???
+    @Test
+    public void checkGetBooksByPrice() {
+        given().
+                contentType(MediaType.APPLICATION_JSON).
+                when().
+                get("/book/cena/{cena}", 10.00).
+                then().
+                statusCode(200).
+                body("result.size()", greaterThan(0));
     }
 }
