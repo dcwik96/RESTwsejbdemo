@@ -79,7 +79,7 @@ public class BookServiceIT {
         given().
                 contentType(MediaType.APPLICATION_JSON).
                 when().
-                get("/book/cena/{cena}", 10.00).
+                get("/book/cena/{cena}", 0.00).
                 then().
                 statusCode(200).
                 body("result.size()", greaterThan(0));
