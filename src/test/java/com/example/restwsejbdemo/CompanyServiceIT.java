@@ -1,6 +1,8 @@
 package com.example.restwsejbdemo;
 
 import com.example.restwsejbdemo.domain.Company;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.jayway.restassured.RestAssured;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -39,5 +41,15 @@ public class CompanyServiceIT {
                 contentType(MediaType.APPLICATION_JSON).
                 body(company).
                 when().post("/company").then().assertThat().statusCode(500);
+    }
+
+    @Test
+    public void checkGsonPostCompany() {
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        Gson gson = gsonBuilder.create();
+
+        given().contentType(MediaType.APPLICATION_JSON).
+                body(gson.toJson(new Company(COMPANY_NAME)))
+                .when().post("/company").then().assertThat().statusCode(201);
     }
 }
