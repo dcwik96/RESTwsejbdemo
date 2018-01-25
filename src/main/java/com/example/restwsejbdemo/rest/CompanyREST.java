@@ -7,9 +7,13 @@ import com.google.gson.Gson;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonReader;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.io.StringReader;
 
 @Path("company")
 @Stateless
@@ -32,6 +36,7 @@ public class CompanyREST {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addCompany(Company company) {
+        System.out.println("@@@@@@@@@@@@@@@@@@@" + company);
         companyManager.addCompany(company);
         return Response.status(201).entity("Company").build();
     }
@@ -42,5 +47,17 @@ public class CompanyREST {
         companyManager.deleteCompany(companyManager.getCompany(id));
     }
 
+    @POST
+    @Path("/jsonReader")
+    public Response addCompanyWithJsonReader(String company) {
+        JsonReader reader = Json.createReader(new StringReader(company));
+        JsonObject jsonObject = reader.readObject();
+
+        Company plainCompany = new Company();
+        plainCompany.setName(jsonObject.getString("name"));
+
+        companyManager.addCompany(plainCompany);
+        return Response.status(201).entity("Company").build();
+    }
 
 }

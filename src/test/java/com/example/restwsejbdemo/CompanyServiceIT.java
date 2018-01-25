@@ -52,4 +52,14 @@ public class CompanyServiceIT {
                 body(gson.toJson(new Company(COMPANY_NAME)))
                 .when().post("/company").then().assertThat().statusCode(201);
     }
+
+    @Test
+    public void checkAddCompanyWithJsonReader(){
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        Gson gson = gsonBuilder.create();
+
+        given().
+                body(gson.toJson(new Company(COMPANY_NAME))).
+                when().post("/company/jsonReader").then().assertThat().statusCode(201);
+    }
 }
