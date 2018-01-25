@@ -3,6 +3,7 @@ package com.example.restwsejbdemo.rest;
 
 import com.example.restwsejbdemo.domain.Company;
 import com.example.restwsejbdemo.service.CompanyManager;
+import com.google.gson.Gson;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -19,10 +20,13 @@ public class CompanyREST {
 
     @GET
     @Path("/{companyId}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Company getCompany(@PathParam("companyId") Long id) {
+//    @Produces(MediaType.APPLICATION_JSON)
+    public String getCompany(@PathParam("companyId") Long id) {
         Company c = companyManager.getCompany(id);
-        return c;
+
+        Gson gson = new Gson();
+
+        return gson.toJson(c);
     }
 
     @POST
