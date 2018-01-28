@@ -64,7 +64,7 @@ public class BookRESTService {
 
         bookManager.addBook(book);
 
-        Book addedBook = bookManager.getBook(1l);
+        Book addedBook = bookManager.getBook((long) bookManager.getAllBooks().size());
         try {
             System.out.println(addedBook.getCompany().getName());
         } catch (org.hibernate.LazyInitializationException e) {

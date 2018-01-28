@@ -54,7 +54,7 @@ public class CompanyServiceIT {
     }
 
     @Test
-    public void checkAddCompanyWithJsonReader(){
+    public void checkAddCompanyWithJsonReader() {
         GsonBuilder gsonBuilder = new GsonBuilder();
         Gson gson = gsonBuilder.create();
 

@@ -8,6 +8,7 @@ import com.jayway.restassured.RestAssured;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import javax.transaction.Transactional;
 import javax.ws.rs.core.MediaType;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.List;
 import static com.jayway.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.greaterThan;
 
+@Transactional
 public class BookServiceIT {
 
     private static final String BOOK_TITLE = "Tytul";
