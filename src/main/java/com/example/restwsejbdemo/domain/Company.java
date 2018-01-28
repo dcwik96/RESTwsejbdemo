@@ -1,12 +1,13 @@
 package com.example.restwsejbdemo.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
+@NamedQueries({
+        @NamedQuery(name = "company.deleteAll", query = "Delete from Company "),
+        @NamedQuery(name = "company.getAll", query = "Select c from Company c")
+})
 public class Company {
 
     private Long id;

@@ -5,6 +5,7 @@ import com.example.restwsejbdemo.domain.Company;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.List;
 
 @Stateless
 public class CompanyManager {
@@ -26,6 +27,16 @@ public class CompanyManager {
 
     public Company updateCompany(Company company) {
         return em.merge(company);
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<Company> getAllCompanies() {
+        return em.createNamedQuery("company.getAll").getResultList();
+    }
+
+    @SuppressWarnings("unchecked")
+    public void deleteAllCompanies() {
+        em.createNamedQuery("company.deleteAll").executeUpdate();
     }
 
 }

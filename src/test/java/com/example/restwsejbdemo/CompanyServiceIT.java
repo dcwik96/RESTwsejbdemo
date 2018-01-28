@@ -4,12 +4,15 @@ import com.example.restwsejbdemo.domain.Company;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.jayway.restassured.RestAssured;
+import org.junit.After;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import javax.ws.rs.core.MediaType;
 
 import static com.jayway.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.equalToIgnoringCase;
+import static org.hamcrest.Matchers.is;
 
 public class CompanyServiceIT {
 
@@ -42,6 +45,44 @@ public class CompanyServiceIT {
                 body(company).
                 when().post("/company").then().assertThat().statusCode(500);
     }
+
+    @Test
+    public void checkGetAllCompanies() {
+        Company company = new Company(COMPANY_NAME);
+
+        given().
+                contentType(MediaType.APPLICATION_JSON).
+                body(company).
+                when().post("/company").then().assertThat().statusCode(201);
+
+        given().
+                contentType(MediaType.APPLICATION_JSON).
+                when().
+                get("/company").
+                then().
+                statusCode(200).
+                body("result.size()", is(1),
+                        "[0].name", equalToIgnoringCase(COMPANY_NAME));
+    }
+
+    @After
+    public void checkDeleteAllCompanies() {
+        Company company = new Company(COMPANY_NAME);
+
+        given().
+//                contentType(MediaType.APPLICATION_JSON).
+        body(company).
+                when().delete("/company").then().assertThat().statusCode(200);
+
+        given().
+                contentType(MediaType.APPLICATION_JSON).
+                when().
+                get("/company").
+                then().
+                statusCode(200).
+                body("result.size()", is(0));
+    }
+
 
     @Test
     public void checkGsonPostCompany() {

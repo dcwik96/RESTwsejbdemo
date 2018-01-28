@@ -35,8 +35,8 @@ public class PlaceOnShelfREST {
     public void deleteBook(@PathParam("id") Long id) {
         PlaceOnShelf pos = entityManager.find(PlaceOnShelf.class, id);
         entityManager.remove(pos);
-
     }
+
 
 
 }

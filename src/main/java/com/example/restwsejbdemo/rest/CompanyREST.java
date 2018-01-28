@@ -10,10 +10,12 @@ import javax.inject.Inject;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
+import javax.print.attribute.standard.Media;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.StringReader;
+import java.util.List;
 
 @Path("company")
 @Stateless
@@ -33,20 +35,30 @@ public class CompanyREST {
         return gson.toJson(c);
     }
 
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Company> getAllCompanies() {
+        return companyManager.getAllCompanies();
+    }
+
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addCompany(Company company) {
-        System.out.println("@@@@@@@@@@@@@@@@@@@" + company);
         companyManager.addCompany(company);
         return Response.status(201).entity("Company").build();
     }
 
     @DELETE
     @Path("/usun/{id}")
-    public void deleteBook(@PathParam("id") Long id) {
+    public void deleteCompany(@PathParam("id") Long id) {
         companyManager.deleteCompany(companyManager.getCompany(id));
     }
 
+    @DELETE
+    public Response deleteAllCompanies(){
+        companyManager.deleteAllCompanies();
+        return Response.status(Response.Status.OK).build();
+    }
     @POST
     @Path("/jsonReader")
     public Response addCompanyWithJsonReader(String company) {
