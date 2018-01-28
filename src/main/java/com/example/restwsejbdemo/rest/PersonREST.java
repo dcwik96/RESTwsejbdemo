@@ -4,6 +4,7 @@ package com.example.restwsejbdemo.rest;
 import com.example.restwsejbdemo.domain.Person;
 import com.example.restwsejbdemo.service.PersonManager;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -14,7 +15,7 @@ import javax.ws.rs.core.Response;
 @Stateless
 public class PersonREST {
 
-    @Inject
+    @EJB
     private PersonManager pm;
 
     @GET
