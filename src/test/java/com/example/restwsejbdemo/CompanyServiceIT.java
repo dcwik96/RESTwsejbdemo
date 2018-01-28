@@ -70,8 +70,7 @@ public class CompanyServiceIT {
         Company company = new Company(COMPANY_NAME);
 
         given().
-//                contentType(MediaType.APPLICATION_JSON).
-        body(company).
+                body(company).
                 when().delete("/company").then().assertThat().statusCode(200);
 
         given().
@@ -102,5 +101,32 @@ public class CompanyServiceIT {
         given().
                 body(gson.toJson(new Company(COMPANY_NAME))).
                 when().post("/company/jsonReader").then().assertThat().statusCode(201);
+    }
+
+    @Test
+    public void checkUpdateCompany() {
+        //Dodaj company
+        Company company = new Company(COMPANY_NAME);
+        given().
+                body(company).
+                when().delete("/company").then().assertThat().statusCode(200);
+        
+        //Zmien company i sprawdz czy poszlo
+        Company newCompany = new Company("Zmieniona");
+        given().
+                contentType(MediaType.APPLICATION_JSON).
+                body(newCompany).
+        when().put("/company/{companyId}", 1l)
+                .then().assertThat().statusCode(200);
+
+        //Sprawdz czy dobrze zmienilo
+        given().
+                contentType(MediaType.APPLICATION_JSON).
+                when().
+                get("/company").
+                then().
+                statusCode(200).
+                body("result.size()", is(1),
+                        "[0].name", equalToIgnoringCase("Zmieniona"));
     }
 }

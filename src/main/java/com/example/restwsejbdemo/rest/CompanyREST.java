@@ -10,7 +10,6 @@ import javax.inject.Inject;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
-import javax.print.attribute.standard.Media;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -26,6 +25,7 @@ public class CompanyREST {
 
     @GET
     @Path("/{companyId}")
+//    REMOVED BECAUSE OF THIS ANNOTATION MAKES CONTEXT AS JSON AUTOMATIC, WE WANT TO CREATE JSON
 //    @Produces(MediaType.APPLICATION_JSON)
     public String getCompany(@PathParam("companyId") Long id) {
         Company c = companyManager.getCompany(id);
@@ -48,17 +48,6 @@ public class CompanyREST {
         return Response.status(201).entity("Company").build();
     }
 
-    @DELETE
-    @Path("/usun/{id}")
-    public void deleteCompany(@PathParam("id") Long id) {
-        companyManager.deleteCompany(companyManager.getCompany(id));
-    }
-
-    @DELETE
-    public Response deleteAllCompanies(){
-        companyManager.deleteAllCompanies();
-        return Response.status(Response.Status.OK).build();
-    }
     @POST
     @Path("/jsonReader")
     public Response addCompanyWithJsonReader(String company) {
@@ -71,5 +60,27 @@ public class CompanyREST {
         companyManager.addCompany(plainCompany);
         return Response.status(201).entity("Company").build();
     }
+
+    @DELETE
+    @Path("/usun/{id}")
+    public void deleteCompany(@PathParam("id") Long id) {
+        companyManager.deleteCompany(companyManager.getCompany(id));
+    }
+
+    @DELETE
+    public Response deleteAllCompanies() {
+        companyManager.deleteAllCompanies();
+        return Response.status(Response.Status.OK).build();
+    }
+
+    @PUT
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/{companyId}")
+    public Response updateCompany(@PathParam("companyId") Long id, Company company) {
+        company.setId(id);
+        companyManager.updateCompany(company);
+        return Response.status(200).build();
+    }
+
 
 }
