@@ -110,13 +110,13 @@ public class CompanyServiceIT {
         given().
                 body(company).
                 when().delete("/company").then().assertThat().statusCode(200);
-        
+
         //Zmien company i sprawdz czy poszlo
         Company newCompany = new Company("Zmieniona");
         given().
                 contentType(MediaType.APPLICATION_JSON).
                 body(newCompany).
-        when().put("/company/{companyId}", 1l)
+                when().put("/company/{companyId}", 1l)
                 .then().assertThat().statusCode(200);
 
         //Sprawdz czy dobrze zmienilo

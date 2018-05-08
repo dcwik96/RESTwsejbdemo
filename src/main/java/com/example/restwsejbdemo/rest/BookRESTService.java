@@ -25,6 +25,14 @@ public class BookRESTService {
     private BookManager bookManager;
 
     @GET
+    @Path("/all")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Transactional
+    public List<Book> getAllBooks() {
+        return bookManager.getAllBooks();
+    }
+
+    @GET
     @Produces(MediaType.TEXT_PLAIN)
     @Transactional
     public String testRelation() {

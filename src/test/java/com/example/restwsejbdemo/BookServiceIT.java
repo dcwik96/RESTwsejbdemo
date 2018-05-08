@@ -8,7 +8,6 @@ import com.jayway.restassured.RestAssured;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import javax.transaction.Transactional;
 import javax.ws.rs.core.MediaType;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +15,6 @@ import java.util.List;
 import static com.jayway.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.greaterThan;
 
-@Transactional
 public class BookServiceIT {
 
     private static final String BOOK_TITLE = "Tytul";
@@ -75,9 +73,17 @@ public class BookServiceIT {
         given().when().get("/book/lazy").then().assertThat().statusCode(200);
     }
 
-//    DODAWANIE KSIAZI PRZED???
+    //    DODAWANIE KSIAZI PRZED???
     @Test
     public void checkGetBooksByPrice() {
+
+        Book book = new Book(BOOK_TITLE, BOOK_PRICE);
+
+        given().
+                contentType(MediaType.APPLICATION_JSON).
+                body(book).
+                when().post("/book").then().assertThat().statusCode(201);
+
         given().
                 contentType(MediaType.APPLICATION_JSON).
                 when().
